@@ -1,55 +1,40 @@
-import QuestionCard from './components/QuestionCard'
-import questions from './data/questions.json'
-import { useState } from 'react';
 
-
-
-
+import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Home from './pages/Home';
+import About from './pages/About';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import Contact from './pages/Contact';
+import Play2 from './pages/Play2';
+import Play1 from './pages/Play1';
 
 
 
 // src/App.jsx
 function App() {
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [started, setStarted] = useState(false);
-  const current = questions[currentQuestionIndex];
-
-  const handleSelect = (option) => {
-    if (option.label === current.correctAnswer) {
-      alert("Correct");
-    }
-    else {
-      alert("Wrong")
-    }
-
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
-    else
-      alert("Quiz Finished!")
-  }
-
-
   return (
     <>
-      <div>
-        {!started ? (
-          <div className="container">
-            <h1  >QuizMaster</h1>
-            <p > Guess the right country by its flag!</p>
-            <button type="submit" onClick={()=> setStarted(true)}>
-              PLAY
-            </button>
-          </div>
-        ) : (
-          <QuestionCard
-            question={current.question}
-            options={current.options}
-            onSelect={handleSelect}
-          />
-        )}
-      </div>
+
+      <nav style={{
+        display: 'flex',
+        gap: '1rem',
+        padding: '1rem',
+        background: '#ddd'
+      }}>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/privacy-policy">Privacy Policy</Link>
+        <Link to="/contact">Contact</Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/play1" element={<Play1 />} />
+        <Route path="/play2" element={<Play2 />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
     </>
   );
 }
